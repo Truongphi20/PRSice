@@ -1,5 +1,5 @@
 {
-  "name": "PRSICE",
+  "name": "PRSice",
   "build": {
     "dockerfile": "Dockerfile"
   },

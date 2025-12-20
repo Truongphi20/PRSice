@@ -35,6 +35,20 @@ RUN wget https://github.com/samtools/htslib/releases/download/1.16/htslib-1.16.t
     cd .. && rm -rf htslib-1.16*
 
 
+# Install cmake
+RUN mkdir -p /usr/local
+RUN cd /usr/local &&\
+    wget https://github.com/Kitware/CMake/releases/download/v4.0.2/cmake-4.0.2-linux-x86_64.sh &&\
+    chmod +x cmake-4.0.2-linux-x86_64.sh &&\
+    ./cmake-4.0.2-linux-x86_64.sh --skip-license
+
+# Install Doxygen 1.9.5
+RUN wget https://www.doxygen.nl/files/doxygen-1.9.5.linux.bin.tar.gz && \
+    tar -xzf doxygen-1.9.5.linux.bin.tar.gz && \
+    ln -sf /opt/doxygen-1.9.5/bin/doxygen /usr/local/bin/doxygen && \
+    rm doxygen-1.9.5.linux.bin.tar.gz
+
+
 # Create vscode user
 RUN useradd -m -s /bin/bash vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode && \
