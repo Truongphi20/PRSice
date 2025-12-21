@@ -48,6 +48,8 @@ RUN wget https://www.doxygen.nl/files/doxygen-1.9.5.linux.bin.tar.gz && \
     ln -sf /opt/doxygen-1.9.5/bin/doxygen /usr/local/bin/doxygen && \
     rm doxygen-1.9.5.linux.bin.tar.gz
 
+## Install other dependencies
+RUN apt-get update && apt-get install -y unzip
 
 # Create vscode user
 RUN useradd -m -s /bin/bash vscode && \
