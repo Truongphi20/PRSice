@@ -19,9 +19,7 @@ src/bk/
 *.zip
 \.settings/
 \.cproject
-*.gz
 site/
-test/data/*
 zlib*
 *.user*
 build_test/
