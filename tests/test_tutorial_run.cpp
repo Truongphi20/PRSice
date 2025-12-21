@@ -1,19 +1,23 @@
 #include <gtest/gtest.h>
-#include "main.hpp"
+#include "prs_score.hpp"
 
 #include <vector>
 #include <string>
 #include <cstring>
 
+#ifndef TEST_DATA_FOLDER
+#define TEST_DATA_FOLDER
+#endif
+
 TEST(DRY_RUN, test_simple_prs_data)
 {
     std::vector<std::string> args{
         "prs_tool",
-        "--base", "data/Height.QC.gz",
-        "--target", "data/EUR.QC",
+        "--base", std::string(TEST_DATA_FOLDER) + "/Height.QC.gz",
+        "--target", std::string(TEST_DATA_FOLDER) + "/EUR.QC",
         "--binary-target", "F",
-        "--pheno", "data/EUR.height",
-        "--cov", "data/EUR.covariate",
+        "--pheno", std::string(TEST_DATA_FOLDER) + "/EUR.height",
+        "--cov", std::string(TEST_DATA_FOLDER) + "/EUR.covariate",
         "--base-maf", "MAF:0.01",
         "--base-info", "INFO:0.8",
         "--stat", "OR",
@@ -31,12 +35,7 @@ TEST(DRY_RUN, test_simple_prs_data)
     }
 
     int argc = static_cast<int>(argv.size());
-    int ret = main(argc, argv.data());
-
-    // cleanup
-    for (char* p : argv) {
-        delete[] p;
-    }
-
+    int ret = run_prs(argc, argv.data());
+    
     EXPECT_EQ(ret, 0);
 }

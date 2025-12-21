@@ -72,6 +72,7 @@ target_link_libraries(regression PUBLIC plink)
 add_library(prsice_lib
     ${CMAKE_SOURCE_DIR}/src/prset.cpp
     ${CMAKE_SOURCE_DIR}/src/prsice.cpp
+    ${CMAKE_SOURCE_DIR}/src/prs_core.cpp
     ${CMAKE_SOURCE_DIR}/src/region.cpp)
 target_include_directories(prsice_lib INTERFACE
     ${CMAKE_SOURCE_DIR}/inc)
@@ -81,4 +82,3 @@ target_link_libraries(prsice_lib PUBLIC
     utility
     ${CMAKE_THREAD_LIBS_INIT}
     coverage_config)
-

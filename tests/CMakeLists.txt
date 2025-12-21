@@ -19,5 +19,6 @@ target_link_libraries(test_tutorial_run GTest::gtest_main
                                         genotyping 
                                         regression 
                                         utility coverage_config)
+target_compile_definitions(test_tutorial_run PRIVATE TEST_DATA_FOLDER="${CMAKE_SOURCE_DIR}/tests/data")
 target_include_directories(test_tutorial_run PUBLIC ${CMAKE_SOURCE_DIR}/inc)
 add_test(NAME test_tutorial_run COMMAND test_tutorial_run)

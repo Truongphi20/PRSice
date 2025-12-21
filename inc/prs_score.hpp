@@ -20,6 +20,6 @@
 #include <utility>
 
 
-int main(int argc, char* argv[]);
+int run_prs(int argc, char* argv[]);
 
 #endif
