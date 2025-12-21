@@ -16,7 +16,6 @@ Release/*
 *.summary
 *.swp
 src/bk/
-*.zip
 \.settings/
 \.cproject
 site/
