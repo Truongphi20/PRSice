@@ -1,0 +1,6 @@
+covariate <- read.table("EUR.cov", header=T)
+pcs <- read.table("EUR.eigenvec", header=F)
+colnames(pcs) <- c("FID","IID", paste0("PC",1:6))
+cov <- merge(covariate, pcs, by=c("FID", "IID"))
+write.table(cov,"EUR.covariate", quote=F, row.names=F)
+q()

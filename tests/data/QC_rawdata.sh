@@ -108,6 +108,24 @@ docker run -v $PWD:$PWD --rm -w $PWD biocontainers/plink1.9:v1.90b6.6-181012-1-d
     --exclude EUR.mismatch \
     --a1-allele EUR.a1
 
-### 2.10 Clean up
-rm -f EUR.bed EUR.bim EUR.cov EUR.fam EUR.height \
-      .pversion EUR.QC.log EUR.QC.hh EUR.QC.irem EUR.QC.rel.id
+### 2.10 Generate covariate file
+docker run -v $PWD:$PWD --rm -w $PWD biocontainers/plink1.9:v1.90b6.6-181012-1-deb_cv1 \
+    plink1.9\
+    --bfile EUR \
+    --extract EUR.QC.prune.in \
+    --mind 0.02 \
+    --pca 10 \
+    --out EUR
+
+docker run --rm \
+  -v "$PWD":"$PWD" \
+  -w "$PWD" \
+  rocker/r-base:4.5.2 \
+  Rscript covariate.R
+
+### Clean up
+rm -f EUR.bed EUR.bim EUR.fam\
+      .pversion EUR.QC.log EUR.QC.hh EUR.QC.irem EUR.QC.rel.id \
+      EUR.hh EUR.a1 EUR.eigenval EUR.irem EUR.log \
+      EUR.mismatch EUR.QC.prune.in EUR.QC.prune.out EUR.QC.sexcheck EUR.QC.snplist \
+      EUR.QC.valid EUR.valid.sample
