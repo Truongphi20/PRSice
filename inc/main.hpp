@@ -1,3 +1,6 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #include "IITree.h"
 #include "cgranges.h"
 #include "commander.hpp"
@@ -15,3 +18,8 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+
+
+int main(int argc, char* argv[]);
+
+#endif
