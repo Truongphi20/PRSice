@@ -124,7 +124,7 @@ docker run --rm \
   Rscript covariate.R
 
 ### Clean up
-rm -f EUR.bed EUR.bim EUR.fam EUR.height \
+rm -f EUR.bed EUR.bim EUR.fam\
       .pversion EUR.QC.log EUR.QC.hh EUR.QC.irem EUR.QC.rel.id \
       EUR.hh EUR.a1 EUR.eigenval EUR.irem EUR.log \
       EUR.mismatch EUR.QC.prune.in EUR.QC.prune.out EUR.QC.sexcheck EUR.QC.snplist \
