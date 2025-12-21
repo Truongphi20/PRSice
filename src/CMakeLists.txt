@@ -82,18 +82,3 @@ target_link_libraries(prsice_lib PUBLIC
     ${CMAKE_THREAD_LIBS_INIT}
     coverage_config)
 
-
-add_executable(PRSice
-    ${CMAKE_SOURCE_DIR}/src/main.cpp)
-target_include_directories(PRSice PUBLIC
-    ${CMAKE_SOURCE_DIR}/inc)
-target_link_libraries(PRSice PUBLIC
-    bgen
-    gzstream
-    plink
-    prsice_lib
-    genotyping
-    regression
-    utility
-    coverage_config)
-

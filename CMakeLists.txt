@@ -59,10 +59,22 @@ endif()
 
 add_subdirectory(src)
 
-option (BUILD_TESTING "Build the unit test." OFF)
-# Only build tests if we are the top-level project
-# Allows this to be used by super projects with `add_subdirectory`
-if (BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-    enable_testing()
-    add_subdirectory(test)
+# SETUP TEST SWITCHING
+option(TEST "DO GTEST" OFF)
+if (TEST)
+  add_subdirectory(tests)
+else()
+  add_executable(PRSice
+    ${CMAKE_SOURCE_DIR}/src/main.cpp)
+  target_include_directories(PRSice PUBLIC
+    ${CMAKE_SOURCE_DIR}/inc)
+  target_link_libraries(PRSice PUBLIC
+      bgen
+      gzstream
+      plink
+      prsice_lib
+      genotyping
+      regression
+      utility
+      coverage_config)
 endif()
