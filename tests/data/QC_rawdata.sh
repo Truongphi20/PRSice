@@ -126,6 +126,6 @@ docker run --rm \
 ### Clean up
 rm -f EUR.bed EUR.bim EUR.fam EUR.height \
       .pversion EUR.QC.log EUR.QC.hh EUR.QC.irem EUR.QC.rel.id \
-      EUR.hh EUR.a1 EUR.covariate EUR.eigenval EUR.irem EUR.log \
+      EUR.hh EUR.a1 EUR.eigenval EUR.irem EUR.log \
       EUR.mismatch EUR.QC.prune.in EUR.QC.prune.out EUR.QC.sexcheck EUR.QC.snplist \
       EUR.QC.valid EUR.valid.sample
