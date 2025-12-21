@@ -47,22 +47,22 @@ inline void print_empty_region(
     }
 }
 
-inline void initialize_genotype(
+void initialize_genotype(
     const std::vector<IITree<size_t, size_t>>& exclusion_regions,
     const Commander& commander, Genotype* current_file,
     Reporter& reporter, Genotype* target_file);
 
-inline void initialize_target(
+void initialize_target(
     const std::vector<IITree<size_t, size_t>>& exclusion_regions,
     const Commander& commander, Genotype* target_file,
     Reporter& reporter);
 
-inline void initialize_reference(
+void initialize_reference(
     const std::vector<IITree<size_t, size_t>>& exclusion_regions,
     const Commander& commander, Genotype* target_file,
     Genotype* reference_file, Reporter& reporter);
 
-inline std::tuple<std::vector<std::string>, size_t>
+std::tuple<std::vector<std::string>, size_t>
 add_gene_set_info(const Commander& commander,
                   Genotype* target_file,
                   Reporter& reporter);
