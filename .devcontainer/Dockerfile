@@ -63,5 +63,19 @@ RUN useradd -m -s /bin/bash vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode && \
     chmod 0440 /etc/sudoers.d/vscode
 
+# Install Python
+RUN sudo apt-get update && sudo apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    python-is-python3 \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 USER vscode
 WORKDIR /workspace
+
+# Install uv (Python package manager)
+RUN wget -qO- https://astral.sh/uv/install.sh | sh
+ENV PATH="/home/vscode/.local/bin:${PATH}"
+ENV UV_LINK_MODE=copy
