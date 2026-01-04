@@ -21,6 +21,7 @@ TEST(DRY_RUN, test_simple_prs_data)
         "--base-maf", "MAF:0.01",
         "--base-info", "INFO:0.8",
         "--stat", "OR",
+        "--thread", "1",
         "--or",
         "--out", "EUR"
     };
