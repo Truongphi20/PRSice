@@ -106,6 +106,10 @@ class Genotype:
                     how="left")\
                 .loc[:,["chrom", "pos", "P"]]
         return [SNP(row.chrom, row.pos, row.P) for row in df.itertuples()]
+    
+    def update_index_tot(self):
+        # inc/genotype.hpp:1118
+        pass
 
     def clumping(self):
         # src/genotype.cpp:1194
@@ -164,10 +168,11 @@ class Genotype:
                     if (clump_snp.m_genotype_storage == 0):
                         # src/genotype.cpp:1344
                         pass
-
                     pass
+                
+                # src/genotype.cpp:1360
+                self.update_index_tot()
 
-                pass
             pass
 
         pass
