@@ -26,15 +26,7 @@ class Genotype:
         self.covariate_data = pd.read_csv(cov_file, sep=" ")
 
         # inc/storage.hpp:193
-        self.clumping_struct = {
-            "distance": 250000,
-            "r2": 0.1,
-            "proxy": 0,
-            "pvalue": 1,
-            "no_clump": False,
-            "use_proxy": False,
-            "provided_distance": False
-        }
+        self.clumping_struct = Clumping()
 
     @property
     def m_sort_by_p_index(self) -> list[int]:
@@ -160,7 +152,21 @@ class Genotype:
                 # inc/snp.hpp:351
                 clump_start_idx = core_snp.m_clump_info.low_bound
                 clump_end_idx = core_snp.m_clump_info.up_bound
-                print(clump_start_idx, clump_end_idx)
+                
+                for clump_idx in range(clump_start_idx, core_snp_idx):
+                    clump_snp = self.m_existed_snps[clump_idx]
+
+                    if (clump_snp.clumped) or (clump_snp.p_value > self.clumping_struct["pvalue"]):
+                        continue
+
+                    # src/genotype.cpp:1341
+                    # inc/snp.hpp:455
+                    if (clump_snp.m_genotype_storage == 0):
+                        # src/genotype.cpp:1344
+                        pass
+
+                    pass
+
                 pass
             pass
 

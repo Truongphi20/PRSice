@@ -30,3 +30,4 @@ class SNP:
     p_value: float 
     m_clump_info: SNPClump = field(default_factory=SNPClump)
     clumped: bool = False
+    m_genotype_storage: int = 0
