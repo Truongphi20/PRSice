@@ -26,7 +26,7 @@ class Genotype:
         self.covariate_data = pd.read_csv(cov_file, sep=" ")
 
         # inc/storage.hpp:193
-        self.clumping_struct = Clumping()
+        self.clumping_info = Clumping()
 
     @property
     def m_sort_by_p_index(self) -> list[int]:
@@ -79,7 +79,7 @@ class Genotype:
             ## Lift up low_bound by limiting clumping distance (position distance)
             # src/genotype.cpp:101
             cur_dist = pos - prev_loc
-            while(cur_dist > self.clumping_struct["distance"] and low_bound < i_dx):
+            while(cur_dist > self.clumping_info["distance"] and low_bound < i_dx):
                 snp_distance = i_dx - low_bound
                 self.m_existed_snps[low_bound].m_clump_info.up_bound = i_dx
 
@@ -109,6 +109,10 @@ class Genotype:
     
     def update_index_tot(self):
         # inc/genotype.hpp:1118
+        pass
+
+    def get_r2(self):
+        # inc/genotype.hpp:1149
         pass
 
     def clumping(self):
@@ -149,7 +153,7 @@ class Genotype:
                 core_snp_idx = self.m_sort_by_p_index[i_snp]
                 core_snp = self.m_existed_snps[core_snp_idx]
 
-                if (core_snp.clumped) or (core_snp.p_value > self.clumping_struct["pvalue"]): 
+                if (core_snp.clumped) or (core_snp.p_value > self.clumping_info["pvalue"]): 
                     continue
 
                 # src/genotype.cpp:1330
@@ -160,7 +164,7 @@ class Genotype:
                 for clump_idx in range(clump_start_idx, core_snp_idx):
                     clump_snp = self.m_existed_snps[clump_idx]
 
-                    if (clump_snp.clumped) or (clump_snp.p_value > self.clumping_struct["pvalue"]):
+                    if (clump_snp.clumped) or (clump_snp.p_value > self.clumping_info["pvalue"]):
                         continue
 
                     # src/genotype.cpp:1341
@@ -171,7 +175,20 @@ class Genotype:
                     pass
                 
                 # src/genotype.cpp:1360
-                self.update_index_tot()
+                self.update_index_tot()     # Just relating to memory manage 
+
+                for clump_idx in range(clump_start_idx, core_snp_idx):
+                    clump_snp = self.m_existed_snps[clump_idx]
+
+                    if(clump_snp.clumped or (clump_snp.p_value > self.clumping_info["pvalue"])):
+                        continue
+                    
+                    # src/genotype.cpp:1374
+                    r2 = self.get_r2()
+
+                    pass
+
+
 
             pass
 
@@ -184,4 +201,5 @@ gt = Genotype(
     )
 
 # print(gt.m_max_window_size)
-gt.clumping()
+# gt.clumping()
+print(gt.G.compute()[1:3,:5])
