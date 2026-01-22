@@ -1,6 +1,7 @@
 from pandas_plink import read_plink
 import pandas as pd
 from data_structs import *
+import plink_algorithm
 from functools import cached_property
 
 BITCT = 64
@@ -113,6 +114,21 @@ class Genotype:
 
     def get_r2(self):
         # inc/genotype.hpp:1149
+
+        is_x = False
+        counts = [0]*18
+        freq11 = 0
+        freq11_expected = 0
+        freq1x = 0
+        freq2x = 0
+        freqx1 = 0
+        freqx2 = 0
+        dxx = 0
+
+        dxx = freq11 - freq11_expected
+        r2 = dxx * dxx / (freq11_expected * freq2x * freqx2)
+        plink_algorithm.genovec_3freq()
+
         pass
 
     def clumping(self):
