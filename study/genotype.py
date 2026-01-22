@@ -131,6 +131,10 @@ class Genotype:
 
         pass
 
+    def read_genotype(self):
+        # inc/binaryplink.hpp:129
+        pass
+
     def clumping(self):
         # src/genotype.cpp:1194
         # src/genotype.cpp:1274
@@ -187,6 +191,7 @@ class Genotype:
                     # inc/snp.hpp:455
                     if (clump_snp.m_genotype_storage == 0):
                         # src/genotype.cpp:1344
+                        self.read_genotype()
                         pass
                     pass
                 
