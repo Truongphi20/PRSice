@@ -26,6 +26,8 @@ class Genotype:
         self.base_data = pd.read_csv(base_file, sep="\t", compression="gzip")
         self.covariate_data = pd.read_csv(cov_file, sep=" ")
 
+        self.num_samples = len(self.fam) 
+
         # inc/storage.hpp:193
         self.clumping_info = Clumping()
 
@@ -133,6 +135,7 @@ class Genotype:
 
     def read_genotype(self):
         # inc/binaryplink.hpp:129
+        final_mask = plink_algorithm.get_final_mask(self.num_samples, BITCT2)
         pass
 
     def clumping(self):
