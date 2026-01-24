@@ -114,7 +114,7 @@ class Genotype:
         # inc/genotype.hpp:1118
         pass
 
-    def get_r2(self):
+    def get_r2(self, window_data_ptr):
         # inc/genotype.hpp:1149
 
         is_x = False
@@ -127,9 +127,13 @@ class Genotype:
         freqx2 = 0
         dxx = 0
 
+        # inc/genotype.hpp:1165
+        plink_algorithm.genovec_3freq(counts, window_data_ptr)
+
+
         dxx = freq11 - freq11_expected
         r2 = dxx * dxx / (freq11_expected * freq2x * freqx2)
-        plink_algorithm.genovec_3freq()
+
 
         pass
 
@@ -208,7 +212,7 @@ class Genotype:
                         continue
                     
                     # src/genotype.cpp:1374
-                    r2 = self.get_r2()
+                    r2 = self.get_r2(window_data_ptr)
 
                     pass
 
