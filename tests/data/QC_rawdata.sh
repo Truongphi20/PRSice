@@ -134,5 +134,6 @@ rm -f EUR.bed EUR.bim EUR.fam\
 docker run -v $PWD:$PWD --rm -w $PWD biocontainers/plink1.9:v1.90b6.6-181012-1-deb_cv1 \
     plink1.9\
     --bfile EUR.QC \
+    --keep-allele-order \
     --recode vcf \
     --out EUR.QC
