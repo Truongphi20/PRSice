@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import List
 
 
 @dataclass(frozen=True)
@@ -25,9 +26,10 @@ class SNPClump:     # inc/storage.hpp:126
 
 @dataclass
 class SNP:
+    index: int
     chr: int 
     pos: int
     p_value: float 
     m_clump_info: SNPClump = field(default_factory=SNPClump)
     clumped: bool = False
-    m_genotype_storage: int = 0
+    m_genotype_storage: int

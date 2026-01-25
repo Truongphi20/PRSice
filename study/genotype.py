@@ -25,6 +25,7 @@ class Genotype:
         self.bim, self.fam, self.G = read_plink(plink_files, verbose=False)
         self.base_data = pd.read_csv(base_file, sep="\t", compression="gzip")
         self.covariate_data = pd.read_csv(cov_file, sep=" ")
+        self.genotype_filename = f"{plink_files}.bed"
 
         self.num_samples = len(self.fam) 
 
@@ -107,8 +108,9 @@ class Genotype:
                     left_on="snp", 
                     right_on="SNP", 
                     how="left")\
-                .loc[:,["chrom", "pos", "P"]]
-        return [SNP(row.chrom, row.pos, row.P) for row in df.itertuples()]
+                .reset_index()\
+                .loc[:,["index", "chrom", "pos", "P"]]
+        return [SNP(row.index, row.chrom, row.pos, row.P) for row in df.itertuples()]
     
     def update_index_tot(self):
         # inc/genotype.hpp:1118
@@ -137,9 +139,21 @@ class Genotype:
 
         pass
 
-    def read_genotype(self):
+    def genotype_file_read(self, byte_pos, read_size):
+        # inc/memoryread.hpp:14
+        with open(self.genotype_filename, "rb") as f:
+            f.seek(byte_pos)
+            result = int.from_bytes(f.read(read_size), byteorder="little")
+        return result
+
+    def read_genotype(self, snp, m_unfiltered_sample_ct):
         # inc/binaryplink.hpp:129
         final_mask = plink_algorithm.get_final_mask(self.num_samples, BITCT2)
+        unfiltered_sample_ct4 = (m_unfiltered_sample_ct + 3) // 4           # 1 byte -> 8 bits -> 4 samples
+        byte_pos = 3 + unfiltered_sample_ct4 * snp.index
+
+        # inc/binaryplink.hpp:141
+        snp.m_genotype_storage = self.genotype_file_read(byte_pos, unfiltered_sample_ct4)
         pass
 
     def clumping(self):
@@ -188,6 +202,7 @@ class Genotype:
                 clump_start_idx = core_snp.m_clump_info.low_bound
                 clump_end_idx = core_snp.m_clump_info.up_bound
                 
+                # src/genotype.cpp:1334
                 for clump_idx in range(clump_start_idx, core_snp_idx):
                     clump_snp = self.m_existed_snps[clump_idx]
 
@@ -198,7 +213,7 @@ class Genotype:
                     # inc/snp.hpp:455
                     if (clump_snp.m_genotype_storage == 0):
                         # src/genotype.cpp:1344
-                        self.read_genotype()
+                        self.read_genotype(clump_snp, m_founder_ct, m_unfiltered_sample_ct)
                         pass
                     pass
                 
