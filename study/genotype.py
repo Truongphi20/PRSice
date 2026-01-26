@@ -143,7 +143,7 @@ class Genotype:
         # inc/memoryread.hpp:14
         with open(self.genotype_filename, "rb") as f:
             f.seek(byte_pos)
-            result = int.from_bytes(f.read(read_size), byteorder="little")
+            result = f.read(read_size)
         return result
 
     def read_genotype(self, snp, m_unfiltered_sample_ct):
