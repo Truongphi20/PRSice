@@ -129,3 +129,11 @@ rm -f EUR.bed EUR.bim EUR.fam\
       EUR.hh EUR.a1 EUR.eigenval EUR.irem EUR.log \
       EUR.mismatch EUR.QC.prune.in EUR.QC.prune.out EUR.QC.sexcheck EUR.QC.snplist \
       EUR.QC.valid EUR.valid.sample
+
+### Create a VCF file to watch
+docker run -v $PWD:$PWD --rm -w $PWD biocontainers/plink1.9:v1.90b6.6-181012-1-deb_cv1 \
+    plink1.9\
+    --bfile EUR.QC \
+    --keep-allele-order \
+    --recode vcf \
+    --out EUR.QC
